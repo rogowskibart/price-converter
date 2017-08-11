@@ -8,9 +8,6 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import static com.rogowskibart.priceconverter.R.string.amount;
-import static com.rogowskibart.priceconverter.R.string.price;
-
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     EditText amountEditText;
@@ -41,10 +38,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.d(TAG, "amountEditText onTextChanged: starts");
-                if (s.length() != 0) {
-//                    calculateResult();
+                if (!verifyFieldsEmpty()) {
+                    calculateResult();
                 } else {
-                    resultTextView.setText("0");
+                    resultTextView.setText("");
 //                    amountEditText.setText("0");
                 }
                 Log.d(TAG, "amountEditText onTextChanged: ends");
@@ -65,11 +62,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.d(TAG, "priceEditText onTextChanged: starts");
-                if (s.length() != 0) {
-//                    calculateResult();
+                if (!verifyFieldsEmpty()) {
+                    calculateResult();
                 } else {
-                    resultTextView.setText("0");
-                    priceEditText.setText("0");
+                    resultTextView.setText("");
+//                    priceEditText.setText("0");
                 }
                 Log.d(TAG, "priceEditText onTextChanged: ends");
             }
@@ -84,15 +81,29 @@ public class MainActivity extends AppCompatActivity {
 
     private void calculateResult() {
 
-        if (amountEditText.getText().length() != 0) {
+//        if (amountEditText.getText().length() != 0) {
             int amount = Integer.parseInt(String.valueOf((amountEditText).getText()));
-        }
-        if (priceEditText.getText().length() != 0) {
+//        }
+//        if (priceEditText.getText().length() != 0) {
             int price = Integer.parseInt(String.valueOf((priceEditText).getText()));
-        }
-        int pricePerKilo;
+//        }
 
+        int pricePerKilo;
         pricePerKilo = (price * 1000) / (amount);
-        resultTextView.setText(pricePerKilo);
+        resultTextView.setText(Integer.toString(pricePerKilo));
+    }
+
+    private boolean verifyFieldsEmpty() {
+        boolean isEmpty = false;
+
+        if(amountEditText.length() == 0) {
+            isEmpty = true;
+        }
+
+        if(priceEditText.length() == 0) {
+            isEmpty = true;
+        }
+
+        return isEmpty;
     }
 }

@@ -10,12 +10,12 @@
         android:id="@+id/amount_edittext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
         android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
         tools:ignore="RtlHardcoded" />
 
     <EditText
@@ -25,7 +25,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:scrollHorizontally="false"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/amount_edittext"
@@ -42,9 +42,9 @@
         app:layout_constraintBottom_toBottomOf="@+id/amount_edittext"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@+id/amount_edittext"
+        app:layout_constraintVertical_bias="0.5"
         tools:ignore="RtlHardcoded"
-        tools:text="Amount"
-        app:layout_constraintVertical_bias="0.5" />
+        tools:text="Amount" />
 
     <TextView
         android:id="@+id/price_textview"
@@ -57,9 +57,9 @@
         app:layout_constraintBottom_toBottomOf="@+id/price_edittext"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@+id/price_edittext"
+        app:layout_constraintVertical_bias="0.5"
         tools:ignore="RtlHardcoded"
-        tools:text="Price"
-        app:layout_constraintVertical_bias="0.5" />
+        tools:text="Price" />
 
     <TextView
         android:id="@+id/result_title_textview"
