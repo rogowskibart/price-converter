@@ -79,20 +79,23 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: ends");
     }
 
+    /**
+     * This method calculates the price per kilo.
+     */
     private void calculateResult() {
 
-//        if (amountEditText.getText().length() != 0) {
-            int amount = Integer.parseInt(String.valueOf((amountEditText).getText()));
-//        }
-//        if (priceEditText.getText().length() != 0) {
-            int price = Integer.parseInt(String.valueOf((priceEditText).getText()));
-//        }
+        double amount = Double.parseDouble(String.valueOf((amountEditText).getText()));
+        double price = Double.parseDouble(String.valueOf((priceEditText).getText()));
+        double pricePerKilo;
+        pricePerKilo = (price) / (amount);
 
-        int pricePerKilo;
-        pricePerKilo = (price * 1000) / (amount);
-        resultTextView.setText(Integer.toString(pricePerKilo));
+        resultTextView.setText(Double.toString(pricePerKilo));
     }
 
+    /**
+     * This methods checks if both the fields are empty.
+     * @return true if both fields are empty
+     */
     private boolean verifyFieldsEmpty() {
         boolean isEmpty = false;
 
