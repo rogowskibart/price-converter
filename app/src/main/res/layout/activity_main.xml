@@ -8,58 +8,55 @@
 
     <EditText
         android:id="@+id/amount_edittext"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="numberDecimal"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="RtlHardcoded" />
+        tools:ignore="RtlHardcoded"
+        android:layout_marginStart="8dp"
+        app:layout_constraintRight_toLeftOf="@+id/amount_type_spinner"
+        android:layout_marginRight="8dp" />
+
+    <Button
+        android:id="@+id/amount_clear_button"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/ic_clear_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/amount_edittext"
+        app:layout_constraintRight_toRightOf="@+id/amount_edittext"
+        app:layout_constraintTop_toTopOf="@+id/amount_edittext" />
 
     <EditText
         android:id="@+id/price_edittext"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="numberDecimal"
         android:scrollHorizontally="false"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/amount_edittext"
-        tools:ignore="RtlHardcoded" />
-
-    <TextView
-        android:id="@+id/amount_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/amount"
-        app:layout_constraintBottom_toBottomOf="@+id/amount_edittext"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/amount_edittext"
-        app:layout_constraintVertical_bias="0.5"
         tools:ignore="RtlHardcoded"
-        tools:text="Amount" />
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
-    <TextView
-        android:id="@+id/price_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Button
+        android:id="@+id/price_clear_button"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/price"
+        android:background="@drawable/ic_clear_black_24dp"
         app:layout_constraintBottom_toBottomOf="@+id/price_edittext"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/price_edittext"
-        app:layout_constraintVertical_bias="0.5"
-        tools:ignore="RtlHardcoded"
-        tools:text="Price" />
+        app:layout_constraintRight_toRightOf="@+id/price_edittext"
+        app:layout_constraintTop_toTopOf="@+id/price_edittext" />
 
     <TextView
         android:id="@+id/result_title_textview"
@@ -75,7 +72,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/price_edittext"
-        tools:text="Result title" />
+        tools:text="Result title"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <TextView
         android:id="@+id/result_textview"
@@ -85,10 +84,23 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:textSize="30sp"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/result_title_textview"
-        tools:text="Result" />
+        tools:text="Result"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
+
+    <Spinner
+        android:id="@+id/amount_type_spinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="right"
+        app:layout_constraintBottom_toBottomOf="@+id/amount_edittext"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

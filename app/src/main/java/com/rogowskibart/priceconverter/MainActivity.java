@@ -5,14 +5,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     EditText amountEditText;
     EditText priceEditText;
     TextView resultTextView;
+    Spinner amountTypeSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,13 +27,27 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         amountEditText = (EditText) findViewById(R.id.amount_edittext);
-//        amountEditText.setText("0");
         amountEditText.setHint("Amount");
+
         priceEditText = (EditText) findViewById(R.id.price_edittext);
-//        priceEditText.setText("0");
         priceEditText.setHint("Price");
+
         resultTextView = (TextView) findViewById(R.id.result_textview);
-        resultTextView.setText("0");
+
+        amountTypeSpinner = (Spinner) findViewById(R.id.amount_type_spinner);
+        amountTypeSpinner.setSelection(0, true);
+
+        // Fill the amount spinner with data
+        List<String> amountTypeArray = new ArrayList<>();
+        amountTypeArray.add("kg");
+        amountTypeArray.add("g");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item, amountTypeArray);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner sItems = amountTypeSpinner;
+        sItems.setAdapter(adapter);
 
         amountEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -87,7 +107,15 @@ public class MainActivity extends AppCompatActivity {
         double amount = Double.parseDouble(String.valueOf((amountEditText).getText()));
         double price = Double.parseDouble(String.valueOf((priceEditText).getText()));
         double pricePerKilo;
-        pricePerKilo = (price) / (amount);
+        double amountTypeMultiplier = 0.0;
+        String amountType = amountTypeSpinner.getSelectedItem().toString();
+        if (amountType.equalsIgnoreCase("kg")) {
+            amountTypeMultiplier = 1.0;
+        }
+        if (amountType.equalsIgnoreCase("g")) {
+            amountTypeMultiplier = 1000.0;
+        }
+        pricePerKilo = (price * amountTypeMultiplier) / (amount);
 
         resultTextView.setText(Double.toString(pricePerKilo));
     }
