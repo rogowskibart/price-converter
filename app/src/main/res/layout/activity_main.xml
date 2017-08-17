@@ -19,12 +19,13 @@
         tools:ignore="RtlHardcoded"
         android:layout_marginStart="8dp"
         app:layout_constraintRight_toLeftOf="@+id/amount_type_spinner"
-        android:layout_marginRight="8dp" />
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp" />
 
     <Button
         android:id="@+id/amount_clear_button"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="88dp"
+        android:layout_height="48dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/ic_clear_black_24dp"
         app:layout_constraintBottom_toBottomOf="@+id/amount_edittext"
@@ -50,8 +51,8 @@
 
     <Button
         android:id="@+id/price_clear_button"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="88dp"
+        android:layout_height="48dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/ic_clear_black_24dp"
         app:layout_constraintBottom_toBottomOf="@+id/price_edittext"
@@ -64,17 +65,16 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="31dp"
         android:text="@string/result_title"
         android:textColor="@color/colorBlack87"
         android:textSize="24sp"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/price_edittext"
         tools:text="Result title"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginEnd="8dp"
+        app:layout_constraintRight_toLeftOf="@+id/save_button" />
 
     <TextView
         android:id="@+id/result_textview"
@@ -82,14 +82,15 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="9dp"
         android:textSize="30sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/result_title_textview"
+        app:layout_constraintRight_toRightOf="@+id/result_title_textview"
         app:layout_constraintTop_toBottomOf="@+id/result_title_textview"
         tools:text="Result"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginEnd="8dp"
+        app:layout_constraintHorizontal_bias="0.501" />
 
     <Spinner
         android:id="@+id/amount_type_spinner"
@@ -101,6 +102,46 @@
         android:gravity="right"
         app:layout_constraintBottom_toBottomOf="@+id/amount_edittext"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="RtlHardcoded"
+        android:layout_marginEnd="8dp" />
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="330dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/price_edittext" />
+
+    <Button
+        android:id="@+id/clear_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/save_button"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/results_linearlayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/result_textview"
+        app:layout_constraintVertical_bias="0.0"></LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
