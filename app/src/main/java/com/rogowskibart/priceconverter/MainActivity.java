@@ -5,7 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -19,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     EditText priceEditText;
     TextView resultTextView;
     Spinner amountTypeSpinner;
+    Button amountClearButton;
+    Button priceClearButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +40,38 @@ public class MainActivity extends AppCompatActivity {
         resultTextView = (TextView) findViewById(R.id.result_textview);
 
         amountTypeSpinner = (Spinner) findViewById(R.id.amount_type_spinner);
-        amountTypeSpinner.setSelection(0, true);
+        amountTypeSpinner.setSelection(0);
+        amountTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (!verifyFieldsEmpty()) {
+                    calculateResult();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        // Add the buttons to clear the fields
+        amountClearButton = (Button) findViewById(R.id.amount_clear_button);
+        priceClearButton = (Button) findViewById(R.id.price_clear_button);
+
+        amountClearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                amountEditText.setText("");
+            }
+        });
+
+        priceClearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                priceEditText.setText("");
+            }
+        });
 
         // Fill the amount spinner with data
         List<String> amountTypeArray = new ArrayList<>();
@@ -62,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
                     calculateResult();
                 } else {
                     resultTextView.setText("");
-//                    amountEditText.setText("0");
                 }
                 Log.d(TAG, "amountEditText onTextChanged: ends");
             }
@@ -86,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
                     calculateResult();
                 } else {
                     resultTextView.setText("");
-//                    priceEditText.setText("0");
                 }
                 Log.d(TAG, "priceEditText onTextChanged: ends");
             }
@@ -96,6 +130,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "afterTextChanged: starts");
             }
         });
+
+
         Log.d(TAG, "onCreate: ends");
     }
 
@@ -117,7 +153,8 @@ public class MainActivity extends AppCompatActivity {
         }
         pricePerKilo = (price * amountTypeMultiplier) / (amount);
 
-        resultTextView.setText(Double.toString(pricePerKilo));
+        String result = String.format("%.2f zł", pricePerKilo);
+        resultTextView.setText(result);
     }
 
     /**
