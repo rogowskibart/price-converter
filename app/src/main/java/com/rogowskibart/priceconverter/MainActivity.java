@@ -10,11 +10,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     Spinner amountTypeSpinner;
     Button amountClearButton;
     Button priceClearButton;
+    ListView resultListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
         priceEditText.setHint("Price");
 
         resultTextView = (TextView) findViewById(R.id.result_textview);
+
+        ArrayList<String> resultListItems = new ArrayList<>();
+        ArrayAdapter<String> resultAdapter;
 
         amountTypeSpinner = (Spinner) findViewById(R.id.amount_type_spinner);
         amountTypeSpinner.setSelection(0);
@@ -59,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
         amountClearButton = (Button) findViewById(R.id.amount_clear_button);
         priceClearButton = (Button) findViewById(R.id.price_clear_button);
 
+        resultListView = (ListView) findViewById(R.id.result_listview);
+
         amountClearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Fill the amount spinner with data
-        List<String> amountTypeArray = new ArrayList<>();
+        ArrayList<String> amountTypeArray = new ArrayList<>();
         amountTypeArray.add("kg");
         amountTypeArray.add("g");
 
@@ -131,6 +137,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        resultAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1,
+                resultListItems);
+
+        resultListView.setAdapter(resultAdapter);
 
         Log.d(TAG, "onCreate: ends");
     }
@@ -159,19 +170,24 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * This methods checks if both the fields are empty.
+     *
      * @return true if both fields are empty
      */
     private boolean verifyFieldsEmpty() {
         boolean isEmpty = false;
 
-        if(amountEditText.length() == 0) {
+        if (amountEditText.length() == 0) {
             isEmpty = true;
         }
 
-        if(priceEditText.length() == 0) {
+        if (priceEditText.length() == 0) {
             isEmpty = true;
         }
 
         return isEmpty;
+    }
+
+    private void addRecord() {
+        // TODO take info from edit texts and put them in a list
     }
 }

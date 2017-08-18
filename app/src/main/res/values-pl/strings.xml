@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Price Converter</string>
+    <string name="result_title">Wynik</string>
+    <string name="save_button">Zapisz</string>
+    <string name="clear_button">Wyczyść</string>
+    <string name="price">Cena</string>
+    <string name="amount">Ilość</string>
 </resources>

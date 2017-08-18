@@ -3,4 +3,6 @@
     <string name="amount">Amount</string>
     <string name="price">Price</string>
     <string name="result_title">Result</string>
+    <string name="save_button">Save</string>
+    <string name="clear_button">Clear</string>
 </resources>
