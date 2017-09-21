@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+    EditText productNameEditText;
     EditText amountEditText;
     EditText priceEditText;
     TextView resultTextView;
@@ -25,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     Button amountClearButton;
     Button priceClearButton;
     ListView resultListView;
+    Button saveButton;
+    Button clearButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +35,17 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: starts");
         setContentView(R.layout.activity_main);
 
+        productNameEditText = (EditText) findViewById(R.id.product_name_edittext);
+        productNameEditText.setHint(R.string.product_name);
+
         amountEditText = (EditText) findViewById(R.id.amount_edittext);
-        amountEditText.setHint("Amount");
+        amountEditText.setHint(R.string.amount);
 
         priceEditText = (EditText) findViewById(R.id.price_edittext);
-        priceEditText.setHint("Price");
+        priceEditText.setHint(R.string.price);
 
         resultTextView = (TextView) findViewById(R.id.result_textview);
 
-        ArrayList<String> resultListItems = new ArrayList<>();
-        ArrayAdapter<String> resultAdapter;
 
         amountTypeSpinner = (Spinner) findViewById(R.id.amount_type_spinner);
         amountTypeSpinner.setSelection(0);
@@ -49,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (!verifyFieldsEmpty()) {
-                    calculateResult();
+                    showResult(calculateResult());
                 }
             }
 
@@ -81,8 +85,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Fill the amount spinner with data
         ArrayList<String> amountTypeArray = new ArrayList<>();
-        amountTypeArray.add("kg");
-        amountTypeArray.add("g");
+        String[] paths = getResources().getStringArray(R.array.spinner_array);
+        for (int i = 0; i < paths.length; i++) {
+            amountTypeArray.add(paths[i]);
+        }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item, amountTypeArray);
@@ -101,9 +107,11 @@ public class MainActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.d(TAG, "amountEditText onTextChanged: starts");
                 if (!verifyFieldsEmpty()) {
-                    calculateResult();
+                    showResult(calculateResult());
+                    enableSaveButton();
                 } else {
                     resultTextView.setText("");
+                    disableSaveButton();
                 }
                 Log.d(TAG, "amountEditText onTextChanged: ends");
             }
@@ -124,9 +132,11 @@ public class MainActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.d(TAG, "priceEditText onTextChanged: starts");
                 if (!verifyFieldsEmpty()) {
-                    calculateResult();
+                    showResult(calculateResult());
+                    enableSaveButton();
                 } else {
                     resultTextView.setText("");
+                    disableSaveButton();
                 }
                 Log.d(TAG, "priceEditText onTextChanged: ends");
             }
@@ -137,11 +147,47 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        resultAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1,
-                resultListItems);
+        // Getting ListView to work
 
-        resultListView.setAdapter(resultAdapter);
+        final ArrayList<Product> productList = new ArrayList<>();
+
+        final ProductAdapter productAdapter = new ProductAdapter(this, productList);
+        resultListView.setAdapter(productAdapter);
+
+        saveButton = (Button) findViewById(R.id.save_button);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String productName = String.valueOf(productNameEditText.getText());
+                if (productName.equalsIgnoreCase("")) {
+                    productName = "---";
+                }
+                Double productAmount = Double.valueOf(String.valueOf(amountEditText.getText()));
+                String productType = String.valueOf(amountTypeSpinner.getSelectedItem().toString());
+                Double pricePerKilo = calculateResult();
+                Product product = new Product(productName, productAmount, productType, pricePerKilo);
+
+                productList.add(product);
+                productAdapter.notifyDataSetChanged();
+
+                enableClearButton();
+                clearFields();
+            }
+        });
+        disableSaveButton();
+
+        clearButton = (Button) findViewById(R.id.clear_button);
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                productList.removeAll(productList);
+                productAdapter.notifyDataSetChanged();
+
+                disableClearButton();
+                clearFields();
+            }
+        });
+        disableClearButton();
 
         Log.d(TAG, "onCreate: ends");
     }
@@ -149,23 +195,32 @@ public class MainActivity extends AppCompatActivity {
     /**
      * This method calculates the price per kilo.
      */
-    private void calculateResult() {
+    private double calculateResult() {
 
         double amount = Double.parseDouble(String.valueOf((amountEditText).getText()));
         double price = Double.parseDouble(String.valueOf((priceEditText).getText()));
         double pricePerKilo;
         double amountTypeMultiplier = 0.0;
         String amountType = amountTypeSpinner.getSelectedItem().toString();
-        if (amountType.equalsIgnoreCase("kg")) {
-            amountTypeMultiplier = 1.0;
-        }
-        if (amountType.equalsIgnoreCase("g")) {
-            amountTypeMultiplier = 1000.0;
+        switch (amountType) {
+            case "kg":
+                amountTypeMultiplier = 1.0;
+                break;
+            case "g":
+                amountTypeMultiplier = 1000.0;
+                break;
+            case "l":
+                amountTypeMultiplier = 1.0;
+                break;
+            case "ml":
+                amountTypeMultiplier = 1000.0;
+                break;
+            case "szt":
+                amountTypeMultiplier = 1.0;
+                break;
         }
         pricePerKilo = (price * amountTypeMultiplier) / (amount);
-
-        String result = String.format("%.2f zł", pricePerKilo);
-        resultTextView.setText(result);
+        return pricePerKilo;
     }
 
     /**
@@ -176,18 +231,51 @@ public class MainActivity extends AppCompatActivity {
     private boolean verifyFieldsEmpty() {
         boolean isEmpty = false;
 
-        if (amountEditText.length() == 0) {
+        if (amountEditText.length() == 0
+                || amountEditText.getText().toString().equalsIgnoreCase(".")) {
             isEmpty = true;
         }
 
-        if (priceEditText.length() == 0) {
+        if (priceEditText.length() == 0
+                || priceEditText.getText().toString().equalsIgnoreCase(".")) {
             isEmpty = true;
         }
+
 
         return isEmpty;
     }
 
-    private void addRecord() {
-        // TODO take info from edit texts and put them in a list
+    private void enableSaveButton() {
+        saveButton.setEnabled(true);
     }
+
+    private void disableSaveButton() {
+        saveButton.setEnabled(false);
+    }
+
+    private void enableClearButton() {
+        clearButton.setEnabled(true);
+    }
+
+    private void disableClearButton() {
+        clearButton.setEnabled(false);
+    }
+
+    /**
+     * Sets the text in the result textview
+     *
+     * @param number
+     */
+    private void showResult(double number) {
+        String result = String.format("%.2f zł", number);
+        resultTextView.setText(result);
+    }
+
+    private void clearFields() {
+        productNameEditText.setText("");
+        amountEditText.setText("");
+        priceEditText.setText("");
+    }
+
+
 }

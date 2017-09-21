@@ -1,8 +1,16 @@
 <resources>
-    <string name="app_name">Price Converter</string>
+    <string name="app_name" translatable="false">Price Converter</string>
     <string name="amount">Amount</string>
     <string name="price">Price</string>
     <string name="result_title">Result</string>
     <string name="save_button">Save</string>
     <string name="clear_button">Clear</string>
+    <string name="product_name">Product name</string>
+    <string-array name="spinner_array">
+        <item>kg</item>
+        <item>g</item>
+        <item>l</item>
+        <item>ml</item>
+        <item>unit</item>
+    </string-array>
 </resources>

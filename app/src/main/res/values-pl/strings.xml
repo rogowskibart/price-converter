@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Price Converter</string>
     <string name="result_title">Wynik</string>
     <string name="save_button">Zapisz</string>
     <string name="clear_button">Wyczyść</string>
     <string name="price">Cena</string>
     <string name="amount">Ilość</string>
+    <string name="product_name">Nazwa produktu</string>
+    <string-array name="spinner_array">
+        <item>kg</item>
+        <item>g</item>
+        <item>l</item>
+        <item>ml</item>
+        <item>sztuka</item>
+    </string-array>
 </resources>
